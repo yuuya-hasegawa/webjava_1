@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>商品一覧</title>
+</head>
+<body>
+  <div class="site-header">
+    <div class="shop-name">Online Green Fruit Shop</div>
+  </div>
+  <div class="site-body">
+    <div class="main-title">商品一覧</div>
+    <div class="main-body">
+      <form action="#" th:action="@{/itemlist}" th:object="${orderForm}" method="post">
+        <table>
+          <thead>
+            <tr>
+              <th>商品名</th>
+              <th>価格</th>
+              <th colspan="2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="item: ${itemList}">
+              <td th:text="${item.getName()}"></td>
+              <td th:text="${item.getPrice()}"></td>
+              <td>
+                <input type="hidden" name="item" th:field="${item}" />
+                <input type="text" th:field="*{num}" />
+              </td>
+              <td><input type="submit" name="${item.getName()}" value="カートに追加"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div class="cart-title">カート</div>
+    <div class="cart-body">
+        <table>
+          <thead>
+            <tr>
+              <th>商品名</th>
+              <th>価格</th>
+              <th>個数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="order: ${cartList}">
+              <td th:text="${order.getItem().getName()}"></td>
+              <td th:text="${order.getItem().getPrice()}"></td>
+              <td th:text="${order.getNum()}"></td>
+            </tr>
+            <tr>
+              <td colspan="2">合計金額</td>
+              <td th:text="${cartList.sumPrice()}"></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</body>
+</html>
